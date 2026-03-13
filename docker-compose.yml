@@ -1,0 +1,25 @@
+services:
+  app:
+    build: .
+    ports:
+      - "3003:3000"
+    volumes:
+      - ./src:/app/src
+      - ./public:/app/public
+    environment:
+      - MONGODB_URI=mongodb://mongo:27017/interloq
+      - ANTHROPIC_API_KEY=sk-ant-placeholder
+      - JWT_SECRET=dev-secret-change-in-production
+      - NEXT_PUBLIC_APP_URL=http://localhost:3003
+    depends_on:
+      - mongo
+
+  mongo:
+    image: mongo:7
+    ports:
+      - "27018:27017"
+    volumes:
+      - mongo-data:/data/db
+
+volumes:
+  mongo-data:
