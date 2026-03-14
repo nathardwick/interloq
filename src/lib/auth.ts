@@ -43,7 +43,7 @@ export async function getCurrentUser(): Promise<IUser | null> {
   const token = cookieStore.get(COOKIE_NAME)?.value;
   if (!token) return null;
 
-  const payload = verifyToken(token);
+  const payload = await verifyToken(token);
   if (!payload) return null;
 
   await connectDB();

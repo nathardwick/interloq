@@ -3,7 +3,7 @@ import { getTokenFromCookieHeader, verifyToken } from '@/lib/jwt';
 
 const PUBLIC_PATHS = ['/login', '/register'];
 
-export function middleware(request: NextRequest) {
+export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
   // Allow API auth routes, static assets, and Next.js internals
@@ -22,7 +22,7 @@ export function middleware(request: NextRequest) {
 
   // Check JWT
   const token = getTokenFromCookieHeader(request.headers.get('cookie'));
-  const payload = token ? verifyToken(token) : null;
+  const payload = token ? await verifyToken(token) : null;
 
   if (!payload) {
     const loginUrl = new URL('/login', request.url);
