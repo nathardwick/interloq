@@ -54,6 +54,7 @@ interface UseChatReturn {
   sendMessage: (content: string) => Promise<void>;
   loadSimulation: (id: string) => Promise<void>;
   loadMessages: (simulationId: string) => Promise<void>;
+  updateStatus: (status: 'active' | 'paused' | 'completed') => Promise<void>;
   dismissError: () => void;
   messagesEndRef: React.RefObject<HTMLDivElement>;
 }
@@ -174,6 +175,34 @@ export function useChat(): UseChatReturn {
     [simulation, isLoading],
   );
 
+  /* ---- updateStatus ---- */
+
+  const updateStatus = useCallback(
+    async (status: 'active' | 'paused' | 'completed') => {
+      if (!simulation) return;
+
+      try {
+        const res = await fetch(`/api/simulations/${simulation._id}`, {
+          method: 'PATCH',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ status }),
+        });
+
+        const data = await res.json();
+
+        if (!res.ok) {
+          setError(data.error || 'Failed to update simulation status');
+          return;
+        }
+
+        setSimulation((prev) => (prev ? { ...prev, status } : prev));
+      } catch {
+        setError('Failed to update simulation status');
+      }
+    },
+    [simulation],
+  );
+
   /* ---- dismissError ---- */
 
   const dismissError = useCallback(() => {
@@ -188,6 +217,7 @@ export function useChat(): UseChatReturn {
     sendMessage,
     loadSimulation,
     loadMessages,
+    updateStatus,
     dismissError,
     messagesEndRef,
   };

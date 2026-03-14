@@ -62,7 +62,14 @@ function extractJSON(text: string): string {
 export async function generateSimulation(
   subjectArea: string,
   level: number,
+  excludeNames: string[] = [],
 ): Promise<GeneratedSimulation> {
+  let userMessage = `Generate a consultancy simulation scenario.\n\nSubject area: ${subjectArea}\nLevel: ${level}\n\nRespond with JSON only. No preamble, no markdown formatting.`;
+
+  if (excludeNames.length > 0) {
+    userMessage += `\n\nDo not use any of these names: ${excludeNames.join(', ')}`;
+  }
+
   const response = await anthropic.messages.create({
     model: MODEL,
     max_tokens: 3000,
@@ -71,7 +78,7 @@ export async function generateSimulation(
     messages: [
       {
         role: 'user',
-        content: `Generate a consultancy simulation scenario.\n\nSubject area: ${subjectArea}\nLevel: ${level}\n\nRespond with JSON only. No preamble, no markdown formatting.`,
+        content: userMessage,
       },
     ],
   });

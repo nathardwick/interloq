@@ -11,7 +11,7 @@ services:
       - ./tsconfig.json:/app/tsconfig.json
     environment:
       - MONGODB_URI=mongodb://mongo:27017/interloq
-      - ANTHROPIC_API_KEY=sk-ant-placeholder
+      - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY}
       - JWT_SECRET=dev-secret-change-in-production
       - NEXT_PUBLIC_APP_URL=http://localhost:3003
     depends_on:

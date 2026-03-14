@@ -247,4 +247,5 @@ CRITICAL RULES:
 - The problem must be SPECIFIC to the subject area — not a generic "the company is struggling" scenario.
 - Use REALISTIC UK business language and context (e.g., redundancy not layoffs, tribunal not lawsuit).
 - Never include the "correct" answer or recommended solution. There isn't one. That's the point.
-- The client persona must feel like a real person with opinions, not a neutral information source.`;
+- The client persona must feel like a real person with opinions, not a neutral information source.
+- IMPORTANT: Generate a unique, distinctive client name for each scenario. Vary gender, ethnicity, and naming conventions. Do not reuse common placeholder names like Sarah Mitchell, James Wilson, or Karen Osei. Draw from a wide range of realistic UK names reflecting Britain's diverse population.`;

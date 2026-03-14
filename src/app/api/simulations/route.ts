@@ -70,8 +70,16 @@ export async function POST(request: NextRequest) {
 
     await connectDB();
 
+    // Collect existing client names to avoid duplicates
+    const existingSims = await Simulation.find({ studentId: user._id })
+      .select('clientPersona.name')
+      .lean();
+    const excludeNames = existingSims
+      .map((s) => s.clientPersona?.name)
+      .filter(Boolean) as string[];
+
     // Generate the scenario via Claude
-    const generated = await generateSimulation(subjectArea, level);
+    const generated = await generateSimulation(subjectArea, level, excludeNames);
 
     // Create the simulation document
     const simulation = await Simulation.create({

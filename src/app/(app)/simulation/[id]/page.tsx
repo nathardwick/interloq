@@ -1,16 +1,16 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { useParams, useRouter } from 'next/navigation';
+import { useParams } from 'next/navigation';
 import { useChat } from '@/hooks/useChat';
-import { Button, Spinner } from '@/components/ui';
+import { Spinner } from '@/components/ui';
 import {
   ChatHeader,
   MessageBubble,
   ChatInput,
   DateSeparator,
 } from '@/components/chat';
-import { ArrowLeft, X } from 'lucide-react';
+import { X } from 'lucide-react';
 
 function isSameDay(a: string, b: string): boolean {
   return new Date(a).toDateString() === new Date(b).toDateString();
@@ -18,7 +18,6 @@ function isSameDay(a: string, b: string): boolean {
 
 export default function SimulationPage() {
   const params = useParams();
-  const router = useRouter();
   const simulationId = params.id as string;
   const [userRole, setUserRole] = useState<'student' | 'tutor'>('student');
 
@@ -29,6 +28,7 @@ export default function SimulationPage() {
     error,
     sendMessage,
     loadSimulation,
+    updateStatus,
     dismissError,
     messagesEndRef,
   } = useChat();
@@ -58,15 +58,9 @@ export default function SimulationPage() {
   if (!simulation) {
     return (
       <div className="-m-6 flex items-center justify-center h-[calc(100vh-3.5rem)]">
-        <div className="text-center">
-          <p className="text-sm text-slate-500 mb-4">
-            {error || 'Simulation not found.'}
-          </p>
-          <Button variant="secondary" onClick={() => router.push('/dashboard')}>
-            <ArrowLeft size={14} />
-            Back to Dashboard
-          </Button>
-        </div>
+        <p className="text-sm text-slate-500">
+          {error || 'Simulation not found.'}
+        </p>
       </div>
     );
   }
@@ -75,9 +69,21 @@ export default function SimulationPage() {
   const canSend = userRole === 'student' && simulation.status === 'active';
   const visibleMessages = messages.filter((m) => m.senderType !== 'tutor_note');
 
+  const handleComplete = () => updateStatus('completed');
+
   return (
     <div className="-m-6 flex flex-col h-[calc(100vh-3.5rem)]">
-      <ChatHeader simulation={simulation} />
+      <ChatHeader
+        simulation={simulation}
+        onComplete={userRole === 'student' ? handleComplete : undefined}
+      />
+
+      {/* Completed banner */}
+      {simulation.status === 'completed' && (
+        <div className="px-4 py-2 border-b border-slate-100 bg-slate-50/50 text-center shrink-0">
+          <p className="text-sm text-slate-500">This simulation is complete</p>
+        </div>
+      )}
 
       {/* Messages */}
       <div className="flex-1 overflow-y-auto px-4 py-4">
@@ -123,6 +129,14 @@ export default function SimulationPage() {
             );
           })}
 
+          {isLoading &&
+            visibleMessages.length > 0 &&
+            visibleMessages[visibleMessages.length - 1].senderType === 'student' && (
+              <p className="text-xs text-slate-400 ml-10">
+                {simulation.clientPersona.name} is thinking...
+              </p>
+            )}
+
           <div ref={messagesEndRef} />
         </div>
       </div>
@@ -141,21 +155,16 @@ export default function SimulationPage() {
       )}
 
       {/* Input area */}
-      {canSend ? (
+      {canSend && (
         <div className="border-t border-slate-200 bg-white px-4 py-3 shrink-0">
           <div className="max-w-3xl mx-auto">
             <ChatInput onSend={sendMessage} disabled={isLoading} />
           </div>
         </div>
-      ) : (
+      )}
+      {!canSend && userRole === 'tutor' && (
         <div className="border-t border-slate-200 bg-slate-50 px-4 py-3 text-center shrink-0">
-          <p className="text-sm text-slate-500">
-            {userRole === 'tutor'
-              ? 'Read-only view'
-              : simulation.status === 'paused'
-                ? 'Simulation paused'
-                : 'Simulation completed'}
-          </p>
+          <p className="text-sm text-slate-500">Read-only view</p>
         </div>
       )}
     </div>
