@@ -8,6 +8,7 @@
     "start": "next start",
     "lint": "next lint",
     "seed": "npx tsx scripts/seed.ts",
+    "seed:students": "npx tsx scripts/seed-students.ts",
     "seed:docker": "docker compose exec app npx tsx scripts/seed.ts"
   },
   "dependencies": {

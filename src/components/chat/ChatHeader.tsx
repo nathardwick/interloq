@@ -55,7 +55,7 @@ export function ChatHeader({ simulation, onComplete }: ChatHeaderProps) {
           </span>
           {onComplete && simulation.status === 'active' && (
             <Button
-              variant="ghost"
+              variant="success"
               size="sm"
               onClick={() => setShowCompleteModal(true)}
             >

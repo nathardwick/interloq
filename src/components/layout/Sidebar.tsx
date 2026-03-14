@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { PlusCircle, Users, LayoutList, LayoutDashboard, Building2 } from 'lucide-react';
+import { PlusCircle, Users, LayoutList, LayoutDashboard, Building2, Check } from 'lucide-react';
 
 interface SidebarProps {
   userRole: 'student' | 'tutor';
@@ -29,7 +29,7 @@ const tutorNav: NavItem[] = [
   { href: '/dashboard', label: 'All Simulations', icon: <LayoutList size={18} /> },
 ];
 
-const MAX_SIDEBAR_SIMS = 5;
+const MAX_SIDEBAR_SIMS = 8;
 
 export function Sidebar({ userRole, isOpen, onClose }: SidebarProps) {
   const pathname = usePathname();
@@ -77,7 +77,6 @@ export function Sidebar({ userRole, isOpen, onClose }: SidebarProps) {
           <div className="space-y-0.5">
             {recent.map((sim) => {
               const active = pathname === `/simulation/${sim._id}`;
-              const isActive = sim.status === 'active';
               return (
                 <Link
                   key={sim._id}
@@ -95,8 +94,11 @@ export function Sidebar({ userRole, isOpen, onClose }: SidebarProps) {
                   <span className="truncate text-xs">
                     {sim.clientPersona.name} — {sim.organisationProfile.name}
                   </span>
-                  {isActive && (
+                  {active && (
                     <span className="ml-auto shrink-0 h-1.5 w-1.5 rounded-full bg-emerald-500" />
+                  )}
+                  {!active && sim.status === 'completed' && (
+                    <Check size={13} className="ml-auto shrink-0 text-slate-400" />
                   )}
                 </Link>
               );

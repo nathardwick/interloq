@@ -5,6 +5,7 @@ import { ButtonHTMLAttributes, forwardRef } from 'react';
 const variants = {
   primary: 'bg-navy-800 text-white hover:bg-navy-700 focus:ring-navy-500',
   secondary: 'bg-white text-navy-800 border border-navy-300 hover:bg-navy-50 focus:ring-navy-500',
+  success: 'bg-white text-green-600 border border-green-600 hover:bg-green-50 focus:ring-green-500',
   danger: 'bg-red-600 text-white hover:bg-red-700 focus:ring-red-500',
   ghost: 'text-slate-600 hover:bg-slate-100 focus:ring-slate-400',
 } as const;
