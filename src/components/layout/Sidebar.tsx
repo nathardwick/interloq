@@ -22,7 +22,7 @@ const studentNav: NavItem[] = [
 ];
 
 const tutorNav: NavItem[] = [
-  { href: '/dashboard', label: 'Students', icon: <Users size={18} /> },
+  { href: '/students', label: 'Students', icon: <Users size={18} /> },
   { href: '/dashboard', label: 'All Simulations', icon: <LayoutList size={18} /> },
 ];
 
