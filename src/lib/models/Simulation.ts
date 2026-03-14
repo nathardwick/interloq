@@ -19,6 +19,13 @@ export interface IClientPersona {
   hidden_context: string;
 }
 
+export interface IProblem {
+  summary: string;
+  underlying_causes: string[];
+  stakeholder_tensions: string[];
+  why_its_wicked: string;
+}
+
 export interface IInformationLayers {
   layer_1_upfront: string[];
   layer_2_on_good_questions: string[];
@@ -41,6 +48,7 @@ export interface ISimulation extends Document {
   subjectArea: string;
   level: 5 | 6 | 7;
   organisationProfile: IOrganisationProfile;
+  problem: IProblem;
   clientPersona: IClientPersona;
   informationLayers: IInformationLayers;
   difficultyLevel: 'standard' | 'pressured' | 'difficult';
@@ -59,6 +67,7 @@ const SimulationSchema = new Schema<ISimulation>({
   subjectArea: { type: String, required: true },
   level: { type: Number, enum: [5, 6, 7], required: true },
   organisationProfile: { type: Schema.Types.Mixed, required: true },
+  problem: { type: Schema.Types.Mixed, required: true },
   clientPersona: { type: Schema.Types.Mixed, required: true },
   informationLayers: { type: Schema.Types.Mixed, required: true },
   difficultyLevel: {

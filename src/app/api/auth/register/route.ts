@@ -4,6 +4,13 @@ import { User } from '@/lib/models/User';
 import { hashPassword, generateToken, setAuthCookie } from '@/lib/auth';
 
 export async function POST(request: NextRequest) {
+  if (process.env.ALLOW_REGISTRATION !== 'true') {
+    return NextResponse.json(
+      { error: 'Registration is not available', code: 'REGISTRATION_DISABLED' },
+      { status: 403 },
+    );
+  }
+
   try {
     const { email, password, name, role } = await request.json();
 
