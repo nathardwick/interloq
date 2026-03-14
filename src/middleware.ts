@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getTokenFromCookieHeader, verifyToken } from '@/lib/auth';
+import { getTokenFromCookieHeader, verifyToken } from '@/lib/jwt';
 
 const PUBLIC_PATHS = ['/login', '/register'];
 

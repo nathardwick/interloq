@@ -6,6 +6,9 @@ services:
     volumes:
       - ./src:/app/src
       - ./public:/app/public
+      - ./tailwind.config.ts:/app/tailwind.config.ts
+      - ./postcss.config.mjs:/app/postcss.config.mjs
+      - ./tsconfig.json:/app/tsconfig.json
     environment:
       - MONGODB_URI=mongodb://mongo:27017/interloq
       - ANTHROPIC_API_KEY=sk-ant-placeholder

@@ -1,17 +1,12 @@
 import bcrypt from 'bcryptjs';
-import jwt from 'jsonwebtoken';
 import { cookies } from 'next/headers';
 import { connectDB } from '@/lib/db';
 import { User, IUser } from '@/lib/models/User';
+import { COOKIE_NAME, verifyToken } from '@/lib/jwt';
 
-const JWT_SECRET = process.env.JWT_SECRET!;
-const COOKIE_NAME = 'interloq_token';
-
-export interface JWTPayload {
-  userId: string;
-  email: string;
-  role: 'student' | 'tutor';
-}
+// Re-export everything from jwt.ts so existing imports from '@/lib/auth' still work
+export { generateToken, verifyToken, getTokenFromCookieHeader, COOKIE_NAME } from '@/lib/jwt';
+export type { JWTPayload } from '@/lib/jwt';
 
 export async function hashPassword(password: string): Promise<string> {
   return bcrypt.hash(password, 12);
@@ -19,18 +14,6 @@ export async function hashPassword(password: string): Promise<string> {
 
 export async function verifyPassword(password: string, hash: string): Promise<boolean> {
   return bcrypt.compare(password, hash);
-}
-
-export function generateToken(payload: JWTPayload): string {
-  return jwt.sign(payload, JWT_SECRET, { expiresIn: '7d' });
-}
-
-export function verifyToken(token: string): JWTPayload | null {
-  try {
-    return jwt.verify(token, JWT_SECRET) as JWTPayload;
-  } catch {
-    return null;
-  }
 }
 
 export function setAuthCookie(token: string) {
@@ -66,10 +49,4 @@ export async function getCurrentUser(): Promise<IUser | null> {
   await connectDB();
   const user = await User.findById(payload.userId).select('-password');
   return user;
-}
-
-export function getTokenFromCookieHeader(cookieHeader: string | null): string | null {
-  if (!cookieHeader) return null;
-  const match = cookieHeader.split(';').find(c => c.trim().startsWith(`${COOKIE_NAME}=`));
-  return match ? match.split('=')[1].trim() : null;
 }
