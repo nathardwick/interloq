@@ -3,7 +3,6 @@
 import { useState, FormEvent } from 'react';
 import { useRouter } from 'next/navigation';
 import { Card, Button, Select, Spinner } from '@/components/ui';
-import { ArrowLeft } from 'lucide-react';
 
 const subjectOptions = [
   { value: '', label: 'Select a subject area...' },
@@ -79,14 +78,6 @@ export default function NewSimulationPage() {
 
   return (
     <div className="max-w-lg">
-      <button
-        onClick={() => router.push('/dashboard')}
-        className="flex items-center gap-1.5 text-sm text-slate-500 hover:text-slate-700 transition-colors mb-4"
-      >
-        <ArrowLeft size={14} />
-        Back to simulations
-      </button>
-
       <h1 className="text-lg font-semibold text-slate-900 mb-1">New Simulation</h1>
       <p className="text-sm text-slate-500 mb-6">
         Choose your subject area and level. A client scenario will be generated for you.

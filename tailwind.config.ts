@@ -38,6 +38,7 @@ const config: Config = {
       },
       fontFamily: {
         sans: ['var(--font-inter)', 'system-ui', 'sans-serif'],
+        serif: ['var(--font-source-serif)', 'Georgia', 'serif'],
       },
       keyframes: {
         'fade-in': {
