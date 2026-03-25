@@ -432,7 +432,7 @@ export function CompareTranscripts() {
   return (
     <div>
       {/* Tab bar */}
-      <div className="flex flex-col sm:flex-row gap-1 sm:gap-0 border-b border-slate-200">
+      <div className="flex gap-0 border-b border-slate-200">
         {tabs.map((tab) => (
           <button
             key={tab.id}
