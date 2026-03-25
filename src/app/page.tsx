@@ -60,7 +60,7 @@ export default function LandingPage() {
                 >
                   Consultant Edition
                 </a>
-                <p className="mt-2 text-xs text-slate-400 text-center sm:text-left">
+                <p className="mt-2 text-xs text-slate-400">
                   For universities &amp; HE programmes
                 </p>
               </div>
@@ -71,7 +71,7 @@ export default function LandingPage() {
                 >
                   Adviser Edition
                 </a>
-                <p className="mt-2 text-xs text-slate-400 text-center sm:text-left">
+                <p className="mt-2 text-xs text-slate-400">
                   For business support &amp; training providers
                 </p>
               </div>
