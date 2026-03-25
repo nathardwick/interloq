@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { Button, Spinner } from '@/components/ui';
+import { Button } from '@/components/ui';
 import { NoteCard, type TutorNoteData } from './NoteCard';
 import type { ChatMessage } from '@/hooks/useChat';
 import { Pin, X, StickyNote } from 'lucide-react';

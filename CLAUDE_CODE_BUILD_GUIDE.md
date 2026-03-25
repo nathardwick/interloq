@@ -505,7 +505,6 @@ Keep this as a pure React hook — no UI components. The chat page will consume 
 
 > **This is the most important page in the entire application.** Refer to DEVELOPMENT_NOTES.md UI/UX guidance for the chat interface section.
 
-**Claude Code Prompt:**
 ```
 Create the simulation chat page at src/app/(app)/simulations/[id]/page.tsx.
 
@@ -561,7 +560,6 @@ Create any sub-components needed (MessageBubble, ChatInput, etc.) in src/compone
 
 > **Why API routes first:** Building the data layer before the UI ensures the pages have real endpoints to call, and we can test the auth/role checks independently.
 
-**Claude Code Prompt:**
 ```
 Create the tutor-specific API routes. All routes must verify the user's role is "tutor" — return 403 if not.
 

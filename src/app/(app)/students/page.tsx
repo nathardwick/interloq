@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { Card, Avatar, Spinner, Badge } from '@/components/ui';
+import { Card, Avatar, Spinner } from '@/components/ui';
 import { formatRelativeTime } from '@/components/simulation';
 import { Users, ChevronRight } from 'lucide-react';
 

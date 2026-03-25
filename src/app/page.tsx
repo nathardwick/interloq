@@ -240,7 +240,7 @@ export default function LandingPage() {
               Can&apos;t I just do this with a good AI prompt?
             </h2>
             <p className="mt-6 font-serif text-base md:text-lg text-accent-700 font-medium leading-relaxed">
-              You could try. And you might get a conversation that looks kind
+              <a href="/compare" className="underline hover:text-accent-800 transition-colors">You could try.</a> And you might get a conversation that looks kind
               of similar. But you won&apos;t really get one that develops
               professional skills.
             </p>

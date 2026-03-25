@@ -18,8 +18,6 @@ export async function GET() {
 
     await connectDB();
 
-    const tutorId = user._id.toString();
-
     // Find all students assigned to this tutor
     const students = await User.find({ assignedTutorId: user._id, role: 'student' })
       .select('-password')
